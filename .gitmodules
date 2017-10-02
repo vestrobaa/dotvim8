@@ -1,0 +1,7 @@
+plugged
+[submodule "tools/plug"]
+	path = tools/plug
+	url = https://github.com/junegunn/vim-plug
+[submodule "tools/pymode"]
+	path = tools/pymode
+	url = https://github.com/python-mode/python-mode.git
