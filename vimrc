@@ -184,13 +184,13 @@ nnoremap g# g#zzzv
 " Colors {{{2
 
 if has("win32") || has("win64")
-  colorscheme otaku
+  colorscheme PaperColor
 elseif has("unix")
   colorscheme badwolf
 elseif has("macunix")
-  colo distinguished
+  colo space-vim-dark
 else
-  colo molokai
+  colo PaperColor
 endif
 
 " cscope {{{2
