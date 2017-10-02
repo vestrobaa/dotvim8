@@ -1,3 +1,243 @@
+" Keywords {{{
+" ============
+
+    syn keyword pythonStatement break continue del
+    syn keyword pythonStatement exec return
+    syn keyword pythonStatement pass raise
+    syn keyword pythonStatement global nonlocal assert
+    syn keyword pythonStatement yield
+    syn keyword pythonLambdaExpr lambda
+    syn keyword pythonStatement with as
+
+    syn keyword pythonStatement def nextgroup=pythonFunction skipwhite
+    syn match pythonFunction "\%(\%(def\s\|@\)\s*\)\@<=\h\%(\w\|\.\)*" contained nextgroup=pythonVars
+    syn region pythonVars start="(" skip=+\(".*"\|'.*'\)+ end=")" contained contains=pythonParameters transparent keepend
+    syn match pythonParameters "[^,]*" contained contains=pythonParam skipwhite
+    syn match pythonParam "[^,]*" contained contains=pythonExtraOperator,pythonLambdaExpr,pythonBuiltinObj,pythonBuiltinType,pythonConstant,pythonString,pythonNumber,pythonBrackets,pythonSelf,pythonComment skipwhite
+    syn match pythonBrackets "{[(|)]}" contained skipwhite
+
+    syn keyword pythonStatement class nextgroup=pythonClass skipwhite
+    syn match pythonClass "\%(\%(class\s\)\s*\)\@<=\h\%(\w\|\.\)*" contained nextgroup=pythonClassVars
+    syn region pythonClassVars start="(" end=")" contained contains=pythonClassParameters transparent keepend
+    syn match pythonClassParameters "[^,\*]*" contained contains=pythonBuiltin,pythonBuiltinObj,pythonBuiltinType,pythonExtraOperatorpythonStatement,pythonBrackets,pythonString,pythonComment skipwhite
+
+    syn keyword pythonRepeat        for while
+    syn keyword pythonConditional   if elif else
+    syn keyword pythonInclude       import from
+    syn keyword pythonException     try except finally
+    syn keyword pythonOperator      and in is not or
+
+    syn match pythonExtraOperator "\%([~!^&|/%+-]\|\%(class\s*\)\@<!<<\|<=>\|<=\|\%(<\|\<class\s\+\u\w*\s*\)\@<!<[^<]\@=\|===\|==\|=\~\|>>\|>=\|=\@<!>\|\.\.\.\|\.\.\|::\)"
+    syn match pythonExtraPseudoOperator "\%(-=\|/=\|\*\*=\|\*=\|&&=\|&=\|&&\|||=\||=\|||\|%=\|+=\|!\~\|!=\)"
+
+    syn keyword pythonStatement print
+
+    " if g:pymode_syntax_highlight_async_await
+    syn keyword pythonStatement async await
+    syn match pythonStatement "\<async\s\+def\>" nextgroup=pythonFunction skipwhite
+    syn match pythonStatement "\<async\s\+with\>" display
+    syn match pythonStatement "\<async\s\+for\>" nextgroup=pythonRepeat skipwhite
+
+    " if g:pymode_syntax_highlight_equal_operator
+    syn match pythonExtraOperator "\%(=\)"
+
+    " if g:pymode_syntax_highlight_stars_operator
+    syn match pythonExtraOperator "\%(\*\|\*\*\)"
+    
+    " if g:pymode_syntax_highlight_self
+    syn keyword pythonSelf self cls
+
+" }}}
+
+
+" Decorators {{{
+" ==============
+
+    syn match   pythonDecorator "@" display nextgroup=pythonDottedName skipwhite
+    syn match   pythonDottedName "[a-zA-Z_][a-zA-Z0-9_]*\(\.[a-zA-Z_][a-zA-Z0-9_]*\)*" display contained
+    syn match   pythonDot        "\." display containedin=pythonDottedName
+
+" }}}
+
+
+" Comments {{{
+" ============
+
+    syn match   pythonComment   "#.*$" display contains=pythonTodo,@Spell
+    syn match   pythonRun       "\%^#!.*$"
+    syn match   pythonCoding    "\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$"
+    syn keyword pythonTodo      TODO FIXME XXX contained
+
+" }}}
+
+
+" Errors {{{
+" ==========
+
+    syn match pythonError       "\<\d\+\D\+\>" display
+    syn match pythonError       "[$?]" display
+    syn match pythonError       "[&|]\{2,}" display
+    syn match pythonError       "[=]\{3,}" display
+
+    " Indent errors (mix space and tabs)
+    " if g:pymode_syntax_indent_errors
+    syn match pythonIndentError "^\s*\( \t\|\t \)\s*\S"me=e-1 display
+
+    " Trailing space errors
+    " if g:pymode_syntax_space_errors
+    syn match pythonSpaceError  "\s\+$" display
+
+" }}}
+
+
+" Strings {{{
+" ===========
+
+    syn region pythonString     start=+[bB]\='+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonEscape,pythonEscapeError,@Spell
+    syn region pythonString     start=+[bB]\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonEscape,pythonEscapeError,@Spell
+    syn region pythonString     start=+[bB]\="""+ end=+"""+ keepend contains=pythonEscape,pythonEscapeError,pythonDocTest2,pythonSpaceError,@Spell
+    syn region pythonString     start=+[bB]\='''+ end=+'''+ keepend contains=pythonEscape,pythonEscapeError,pythonDocTest,pythonSpaceError,@Spell
+
+    syn match  pythonEscape     +\\[abfnrtv'"\\]+ display contained
+    syn match  pythonEscape     "\\\o\o\=\o\=" display contained
+    syn match  pythonEscapeError    "\\\o\{,2}[89]" display contained
+    syn match  pythonEscape     "\\x\x\{2}" display contained
+    syn match  pythonEscapeError    "\\x\x\=\X" display contained
+    syn match  pythonEscape     "\\$"
+
+    " Unicode
+    syn region pythonUniString  start=+[uU]'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonEscape,pythonUniEscape,pythonEscapeError,pythonUniEscapeError,@Spell
+    syn region pythonUniString  start=+[uU]"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonEscape,pythonUniEscape,pythonEscapeError,pythonUniEscapeError,@Spell
+    syn region pythonUniString  start=+[uU]"""+ end=+"""+ keepend contains=pythonEscape,pythonUniEscape,pythonEscapeError,pythonUniEscapeError,pythonDocTest2,pythonSpaceError,@Spell
+    syn region pythonUniString  start=+[uU]'''+ end=+'''+ keepend contains=pythonEscape,pythonUniEscape,pythonEscapeError,pythonUniEscapeError,pythonDocTest,pythonSpaceError,@Spell
+
+    syn match  pythonUniEscape          "\\u\x\{4}" display contained
+    syn match  pythonUniEscapeError     "\\u\x\{,3}\X" display contained
+    syn match  pythonUniEscape          "\\U\x\{8}" display contained
+    syn match  pythonUniEscapeError     "\\U\x\{,7}\X" display contained
+    syn match  pythonUniEscape          "\\N{[A-Z ]\+}" display contained
+    syn match  pythonUniEscapeError "\\N{[^A-Z ]\+}" display contained
+
+    " Raw strings
+    syn region pythonRawString  start=+[rR]'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonRawEscape,@Spell
+    syn region pythonRawString  start=+[rR]"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonRawEscape,@Spell
+    syn region pythonRawString  start=+[rR]"""+ end=+"""+ keepend contains=pythonDocTest2,pythonSpaceError,@Spell
+    syn region pythonRawString  start=+[rR]'''+ end=+'''+ keepend contains=pythonDocTest,pythonSpaceError,@Spell
+
+    syn match pythonRawEscape           +\\['"]+ display transparent contained
+
+    " Unicode raw strings
+    syn region pythonUniRawString   start=+[uU][rR]'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonRawEscape,pythonUniRawEscape,pythonUniRawEscapeError,@Spell
+    syn region pythonUniRawString   start=+[uU][rR]"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonRawEscape,pythonUniRawEscape,pythonUniRawEscapeError,@Spell
+    syn region pythonUniRawString   start=+[uU][rR]"""+ end=+"""+ keepend contains=pythonUniRawEscape,pythonUniRawEscapeError,pythonDocTest2,pythonSpaceError,@Spell
+    syn region pythonUniRawString   start=+[uU][rR]'''+ end=+'''+ keepend contains=pythonUniRawEscape,pythonUniRawEscapeError,pythonDocTest,pythonSpaceError,@Spell
+
+    syn match  pythonUniRawEscape   "\([^\\]\(\\\\\)*\)\@<=\\u\x\{4}" display contained
+    syn match  pythonUniRawEscapeError  "\([^\\]\(\\\\\)*\)\@<=\\u\x\{,3}\X" display contained
+
+    " String formatting
+    " if g:pymode_syntax_string_formatting
+    syn match pythonStrFormatting   "%\(([^)]\+)\)\=[-#0 +]*\d*\(\.\d\+\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+    syn match pythonStrFormatting   "%[-#0 +]*\(\*\|\d\+\)\=\(\.\(\*\|\d\+\)\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+
+    " Str.format syntax
+    " if g:pymode_syntax_string_format
+    syn match pythonStrFormat "{{\|}}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+    syn match pythonStrFormat "{\([a-zA-Z0-9_]*\|\d\+\)\(\.[a-zA-Z_][a-zA-Z0-9_]*\|\[\(\d\+\|[^!:\}]\+\)\]\)*\(![rs]\)\=\(:\({\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)}\|\([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*\(\.\d\+\)\=[bcdeEfFgGnoxX%]\=\)\=\)\=}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+
+    " String templates
+    " if g:pymode_syntax_string_templates
+    syn match pythonStrTemplate "\$\$" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+    syn match pythonStrTemplate "\${[a-zA-Z_][a-zA-Z0-9_]*}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+    syn match pythonStrTemplate "\$[a-zA-Z_][a-zA-Z0-9_]*" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+
+    " DocTests
+    " if g:pymode_syntax_doctests
+    syn region pythonDocTest    start="^\s*>>>" end=+'''+he=s-1 end="^\s*$" contained
+    syn region pythonDocTest2   start="^\s*>>>" end=+"""+he=s-1 end="^\s*$" contained
+
+    " DocStrings
+    " if g:pymode_syntax_docstrings
+    syn region pythonDocstring  start=+^\s*[uU]\?[rR]\?"""+ end=+"""+ keepend excludenl contains=pythonEscape,@Spell,pythonDoctest,pythonDocTest2,pythonSpaceError
+    syn region pythonDocstring  start=+^\s*[uU]\?[rR]\?'''+ end=+'''+ keepend excludenl contains=pythonEscape,@Spell,pythonDoctest,pythonDocTest2,pythonSpaceError
+
+
+" }}}
+
+" Numbers {{{
+" ===========
+
+    syn match   pythonHexError  "\<0[xX][0-9a-fA-F_]*[g-zG-Z][0-9a-fA-F_]*[lL]\=\>" display
+    syn match   pythonHexNumber "\<0[xX][0-9a-fA-F_]*[0-9a-fA-F][0-9a-fA-F_]*[lL]\=\>" display
+    syn match   pythonOctNumber "\<0[oO][0-7_]*[0-7][0-7_]*[lL]\=\>" display
+    syn match   pythonBinNumber "\<0[bB][01_]*[01][01_]*[lL]\=\>" display
+    syn match   pythonNumber    "\<[0-9][0-9_]*[lLjJ]\=\>" display
+    syn match   pythonFloat "\.[0-9_]*[0-9][0-9_]*\([eE][+-]\=[0-9_]*[0-9][0-9_]*\)\=[jJ]\=\>" display
+    syn match   pythonFloat "\<[0-9][0-9_]*[eE][+-]\=[0-9_]\+[jJ]\=\>" display
+    syn match   pythonFloat "\<[0-9][0-9_]*\.[0-9_]*\([eE][+-]\=[0-9_]*[0-9][0-9_]*\)\=[jJ]\=" display
+    syn match   pythonOctError  "\<0[oO]\=[0-7_]*[8-9][0-9_]*[lL]\=\>" display
+    syn match   pythonBinError  "\<0[bB][01_]*[2-9][0-9_]*[lL]\=\>" display
+
+" }}}
+
+" Builtins {{{
+" ============
+
+    " Builtin objects and types
+    " if g:pymode_syntax_builtin_objs
+    syn keyword pythonBuiltinObj True False Ellipsis None NotImplemented
+    syn keyword pythonBuiltinObj __debug__ __doc__ __file__ __name__ __package__
+    
+    " if g:pymode_syntax_builtin_types    
+    syn keyword pythonBuiltinType type object
+    syn keyword pythonBuiltinType str basestring unicode buffer bytearray bytes chr unichr
+    syn keyword pythonBuiltinType dict int long bool float complex set frozenset list tuple
+    syn keyword pythonBuiltinType file super
+
+    " Builtin functions
+    " if g:pymode_syntax_builtin_funcs
+    syn keyword pythonBuiltinFunc   __import__ abs all any apply
+    syn keyword pythonBuiltinFunc   bin callable classmethod cmp coerce compile
+    syn keyword pythonBuiltinFunc   delattr dir divmod enumerate eval execfile filter
+    syn keyword pythonBuiltinFunc   format getattr globals locals hasattr hash help hex id
+    syn keyword pythonBuiltinFunc   input intern isinstance issubclass iter len map max min
+    syn keyword pythonBuiltinFunc   next oct open ord pow property range xrange
+    syn keyword pythonBuiltinFunc   raw_input reduce reload repr reversed round setattr
+    syn keyword pythonBuiltinFunc   slice sorted staticmethod sum vars zip
+
+    " if g:pymode_syntax_print_as_function
+    syn keyword pythonBuiltinFunc   print
+
+    " Builtin exceptions and warnings
+    " if g:pymode_syntax_highlight_exceptions
+    syn keyword pythonExClass   BaseException
+    syn keyword pythonExClass   Exception StandardError ArithmeticError
+    syn keyword pythonExClass   LookupError EnvironmentError
+    syn keyword pythonExClass   AssertionError AttributeError BufferError EOFError
+    syn keyword pythonExClass   FloatingPointError GeneratorExit IOError
+    syn keyword pythonExClass   ImportError IndexError KeyError
+    syn keyword pythonExClass   KeyboardInterrupt MemoryError NameError
+    syn keyword pythonExClass   NotImplementedError OSError OverflowError
+    syn keyword pythonExClass   ReferenceError RuntimeError StopIteration
+    syn keyword pythonExClass   SyntaxError IndentationError TabError
+    syn keyword pythonExClass   SystemError SystemExit TypeError
+    syn keyword pythonExClass   UnboundLocalError UnicodeError
+    syn keyword pythonExClass   UnicodeEncodeError UnicodeDecodeError
+    syn keyword pythonExClass   UnicodeTranslateError ValueError VMSError
+    syn keyword pythonExClass   WindowsError ZeroDivisionError
+    syn keyword pythonExClass   Warning UserWarning BytesWarning DeprecationWarning
+    syn keyword pythonExClass   PendingDepricationWarning SyntaxWarning
+    syn keyword pythonExClass   RuntimeWarning FutureWarning
+    syn keyword pythonExClass   ImportWarning UnicodeWarning
+
+" }}}
+
+
+    " This is fast but code inside triple quoted strings screws it up. It
+    " is impossible to fix because the only way to know if you are inside a
+    " triple quoted string is to start from the beginning of the file.
+    " syn sync match pythonSync grouphere NONE "):$"
+    " syn sync maxlines=200
 " Highlight {{{
 " =============
 
