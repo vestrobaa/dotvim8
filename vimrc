@@ -13,6 +13,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " Format {{{2
 Plug 'google/yapf', { 'do': 'pip install yapf' }
+Plug 'w0rp/ale', { 'do': 'pip install pycodestyle' }
 
 " Pretty {{{2
 Plug 'bling/vim-airline'
@@ -216,6 +217,10 @@ endif
 " google/yapf {{{2
 
 autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
+
+" wOrp/ale {{{2
+
+let g:ale_linters = { 'python': ['pycodestyle'] }
 
 " CtrlP {{{2
 
