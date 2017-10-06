@@ -219,8 +219,11 @@ endif
 autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 
 " wOrp/ale {{{2
+"
+" Still extremely slow, start disabled
 
 let g:ale_linters = { 'python': ['pycodestyle'] }
+let g:ale_enabled = 0
 
 " CtrlP {{{2
 
@@ -262,6 +265,7 @@ if has("autocmd")
   " autocmd FileType python match Excess /\%120v.*/
   " autocmd FileType python set foldmethod=indent foldlevel=99
   autocmd FileType python set shiftwidth=4 softtabstop=4 tabstop=4 expandtab shiftround omnifunc=pythoncomplete#Complete
+  autocmd FileType python set foldmethod=indent
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2
   autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
   autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
