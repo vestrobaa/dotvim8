@@ -92,6 +92,24 @@ inoremap <esc> <nop>
 
 hi pythonSelf  ctermfg=68  guifg=#5f87d7 cterm=bold gui=bold
 
+" Fold {{{2
+
+function! SteveFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+
 " Testing {{{1
 " Complete {{{2
 " Add spell completion, if in spell mode
@@ -265,7 +283,7 @@ if has("autocmd")
   " autocmd FileType python match Excess /\%120v.*/
   " autocmd FileType python set foldmethod=indent foldlevel=99
   autocmd FileType python set shiftwidth=4 softtabstop=4 tabstop=4 expandtab shiftround omnifunc=pythoncomplete#Complete
-  autocmd FileType python set foldmethod=indent
+  autocmd FileType python set foldmethod=indent foldtext=SteveFoldText()
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2
   autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
   autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
