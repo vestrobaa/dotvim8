@@ -43,3 +43,4 @@ elseif has("win32") ||  has("win64")
 else
     colo PaperColor
 endif
+set background=light
