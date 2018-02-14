@@ -4,19 +4,32 @@
 " Plug {{{1
 call plug#begin('~/.vim/plugged')
 
-" Tools {{{2
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-capslock'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug Windows {{{2
+if !(has("win32") || has("win64"))
 
-" Format {{{2
-Plug 'google/yapf', { 'do': 'pip install yapf' }
-Plug 'w0rp/ale', { 'do': 'pip install pycodestyle' }
-Plug 'mattn/vim-sqlfmt'
+" Tools {{{3
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-capslock'
+  Plug 'ctrlpvim/ctrlp.vim'
 
-" Pretty {{{2
+" Format {{{3
+  Plug 'google/yapf', { 'do': 'pip install yapf' }
+  Plug 'w0rp/ale', { 'do': 'pip install pycodestyle' }
+    
+else
+" Plug Unix {{{2
+
+  Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-capslock'
+  Plug 'ctrlpvim/ctrlp.vim'
+
+endif
+" Plug all {{{2
+
+" Pretty {{{3
 Plug 'bling/vim-airline'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
@@ -24,6 +37,11 @@ Plug 'lifepillar/vim-wwdc17-theme'
 Plug 'lifepillar/vim-wwdc16-theme'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'junegunn/goyo.vim'
+Plug 'thenewvu/vim-colors-sketching'
+
+" Format {{{3
+Plug 'mattn/vim-sqlfmt'
+
 
 call plug#end()
 
