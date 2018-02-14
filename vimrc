@@ -17,7 +17,7 @@ if !(has("win32") || has("win64"))
 " Format {{{3
   Plug 'google/yapf', { 'do': 'pip install yapf' }
   Plug 'w0rp/ale', { 'do': 'pip install pycodestyle' }
-    
+
 else
 " Plug Unix {{{2
 
@@ -219,10 +219,13 @@ nnoremap g# g#zzzv
 
 if has("win32") || has("win64")
   colorscheme PaperColor
+  set background=light
 elseif has("unix")
   colorscheme badwolf
+  set background=dark
 elseif has("macunix")
   colo space-vim-dark
+  set background=light
 else
   colo PaperColor
 endif
