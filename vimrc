@@ -30,12 +30,13 @@ endif
 " Plug all {{{2
 
 " Pretty {{{3
-  Plug 'bling/vim-airline'
-  Plug 'NLKNguyen/papercolor-theme'
-  Plug 'sjl/badwolf'
-  Plug 'lifepillar/vim-wwdc17-theme'
-  Plug 'lifepillar/vim-wwdc16-theme'
-  Plug 'liuchengxu/space-vim-dark'
+Plug 'bling/vim-airline'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'sjl/badwolf'
+Plug 'lifepillar/vim-wwdc17-theme'
+Plug 'lifepillar/vim-wwdc16-theme'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'thenewvu/vim-colors-sketching'
 
 call plug#end()
 
