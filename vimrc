@@ -22,6 +22,7 @@ Plug 'sjl/badwolf'
 Plug 'lifepillar/vim-wwdc17-theme'
 Plug 'lifepillar/vim-wwdc16-theme'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'thenewvu/vim-colors-sketching'
 
 call plug#end()
 
