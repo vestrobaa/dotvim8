@@ -36,7 +36,12 @@ Plug 'sjl/badwolf'
 Plug 'lifepillar/vim-wwdc17-theme'
 Plug 'lifepillar/vim-wwdc16-theme'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'junegunn/goyo.vim'
 Plug 'thenewvu/vim-colors-sketching'
+
+" Format {{{3
+Plug 'mattn/vim-sqlfmt'
+
 
 call plug#end()
 
