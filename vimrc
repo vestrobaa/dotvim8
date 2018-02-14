@@ -14,6 +14,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Format {{{2
 Plug 'google/yapf', { 'do': 'pip install yapf' }
 Plug 'w0rp/ale', { 'do': 'pip install pycodestyle' }
+Plug 'mattn/vim-sqlfmt'
 
 " Pretty {{{2
 Plug 'bling/vim-airline'
@@ -22,6 +23,7 @@ Plug 'sjl/badwolf'
 Plug 'lifepillar/vim-wwdc17-theme'
 Plug 'lifepillar/vim-wwdc16-theme'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
