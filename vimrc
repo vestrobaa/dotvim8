@@ -195,6 +195,12 @@ set statusline=%<%f\ %h%m%r%q\ %{fugitive#statusline()}%=\ %a\ %{getline('.')[co
 
 " Mappings {{{2
 
+" Now macros
+
+" Union / OR two URL's
+" For appending multiple related lists into one
+map <leader>nu :normal Jct=OR<esc>lx<cr>
+
 " Fix XML (pretty print)
 map <leader>fx :1,%s/>\s*</>\r</g<cr>gg=G
 
@@ -314,6 +320,7 @@ if has("autocmd")
   autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType xml set diffopt=filler,iwhite
   autocmd FileType php set omnifunc=phpcomplete#CompletePHP
   let pandoc_pipeline  = "pandoc --from=html --to=markdown"
   let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
