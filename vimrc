@@ -195,11 +195,12 @@ set statusline=%<%f\ %h%m%r%q\ %{fugitive#statusline()}%=\ %a\ %{getline('.')[co
 
 " Mappings {{{2
 
-" Now macros
+" ServiceNow macros
 
 " Union / OR two URL's
 " For appending multiple related lists into one
-map <leader>nu :normal Jct=OR<esc>lx<cr>
+" map <leader>nu :normal Jct=OR<esc>lx<cr>
+map <leader>nu :normal 0Jcf=OR<esc>0
 
 " Fix XML (pretty print)
 map <leader>fx :1,%s/>\s*</>\r</g<cr>gg=G
