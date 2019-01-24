@@ -41,6 +41,7 @@ Plug 'thenewvu/vim-colors-sketching'
 
 " Format {{{3
 Plug 'mattn/vim-sqlfmt'
+Plug 'jparise/vim-graphql'
 
 
 call plug#end()
