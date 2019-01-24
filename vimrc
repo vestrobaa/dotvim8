@@ -33,8 +33,6 @@ endif
 Plug 'bling/vim-airline'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
-Plug 'lifepillar/vim-wwdc17-theme'
-Plug 'lifepillar/vim-wwdc16-theme'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'junegunn/goyo.vim'
 Plug 'thenewvu/vim-colors-sketching'
@@ -42,6 +40,7 @@ Plug 'thenewvu/vim-colors-sketching'
 " Format {{{3
 Plug 'mattn/vim-sqlfmt'
 Plug 'jparise/vim-graphql'
+Plug 'pangloss/vim-javascript'
 
 
 call plug#end()
@@ -315,7 +314,8 @@ if has("autocmd")
   " autocmd FileType python set foldmethod=indent foldlevel=99
   autocmd FileType python set shiftwidth=4 softtabstop=4 tabstop=4 expandtab shiftround omnifunc=pythoncomplete#Complete
   autocmd FileType python set foldmethod=indent foldtext=SteveFoldText()
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2
+  autocmd FileType javascript,html,sass set ai sw=2 sts=2 foldmethod=indent foldtext=SteveFoldText()
+  autocmd FileType ruby,haml,eruby,yaml,cucumber set ai sw=2 sts=2
   autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
   autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
   autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
