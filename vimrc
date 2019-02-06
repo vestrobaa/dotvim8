@@ -324,10 +324,11 @@ if has("autocmd")
   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
   autocmd FileType xml set diffopt=filler,iwhite
   autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+  autocmd FileType html let &formatprg=pandoc_pipeline
   let pandoc_pipeline  = "pandoc --from=html --to=markdown"
   let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
-  autocmd FileType html let &formatprg=pandoc_pipeline
   autocmd FileType otmlog set sw=2 tw=200
+  autocmd FileType markdown set spell synmaxcol=999999 foldmethod=indent sw=2 sts=2 tabstop=2  omnifunc=markdowncomplete#Complete
 endif
 
 
