@@ -35,6 +35,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'thenewvu/vim-colors-sketching'
 
 " Format {{{3
@@ -328,7 +329,7 @@ if has("autocmd")
   let pandoc_pipeline  = "pandoc --from=html --to=markdown"
   let pandoc_pipeline .= " | pandoc --from=markdown --to=html"
   autocmd FileType otmlog set sw=2 tw=200
-  autocmd FileType markdown set spell synmaxcol=999999 foldmethod=indent sw=2 sts=2 tabstop=2  omnifunc=markdowncomplete#Complete
+  autocmd FileType markdown set spell wrap synmaxcol=999999 foldmethod=indent sw=2 sts=2 tabstop=2  omnifunc=markdowncomplete#Complete
 endif
 
 
