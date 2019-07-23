@@ -35,8 +35,13 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'thenewvu/vim-colors-sketching'
+Plug 'sainnhe/vim-color-forest-night'
+Plug 'sainnhe/vim-color-vanilla-cake'
+Plug 'sainnhe/vim-color-desert-night'
+Plug 'lifepillar/vim-solarized8'
+
+
 
 " Format {{{3
 Plug 'mattn/vim-sqlfmt'
