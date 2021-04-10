@@ -27,7 +27,10 @@ if has("unix")
 
 elseif has("win32") ||  has("win64")
     " set guifont=Consolas:h10:cANSI
-    set guifont=Inconsolata:h10:cANSI
+    " set guifont=Inconsolata:h10:cANSI
+    set guifont=Consolas:h10:cANSI
+    set lines=60 columns=120
+    set bg=dark
 
     if &background == "dark"
         hi normal guibg=black
@@ -42,5 +45,5 @@ elseif has("win32") ||  has("win64")
 
 else
     colo PaperColor
+    set background=light
 endif
-set background=light

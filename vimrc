@@ -40,6 +40,7 @@ Plug 'sainnhe/vim-color-forest-night'
 Plug 'sainnhe/vim-color-vanilla-cake'
 Plug 'sainnhe/vim-color-desert-night'
 Plug 'lifepillar/vim-solarized8'
+Plug 'JMcKiern/vim-shoot'
 
 
 
@@ -210,6 +211,7 @@ map <leader>nu :normal 0Jcf=OR<esc>0
 
 " Fix XML (pretty print)
 map <leader>fx :1,%s/>\s*</>\r</g<cr>gg=G
+map <leader>fj :%!python -m json.tool
 
 " Old csv fix macro
 nmap <leader>csv :%s/\s\+$//g<cr>:%le<cr>:4,$ v/^"/normal kA jkJ/g<cr>
